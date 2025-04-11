@@ -5,11 +5,11 @@ from PIL import Image
 from io import BytesIO
 import requests
 from pgvector.psycopg2 import register_vector
-from dotenv import load_dotenv
+from dotenv import load_dotenv, find_dotenv
 from embedding import  get_text_embedding
-from recipe import recipe_json_to_text
 
-load_dotenv()
+load_dotenv(find_dotenv())
+
 DB_NAME = os.getenv("DB_NAME")
 HOST_IP = os.getenv("HOST_IP")
 DB_USER = os.getenv('DB_USER')

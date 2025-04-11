@@ -42,9 +42,10 @@ if user_input := st.chat_input(accept_file= True, file_type=["png", "jpg"], plac
 
         recipes_text = ""
         for recipe, url in zip(recipes, urls):
-            recipes += "\n" + recipe + "\n" + url + "\n"
+            recipes_text += "\n" + recipe + "\n" + url + "\n"
 
         formatted_prompt = Prompts.recipe_prompt.format(recipes_text, text)
+        print(formatted_prompt)
         st.session_state.messages.append({"role": "user", "content": text})
         stream = client.chat.completions.create(
             model=st.session_state["openai_model"],
