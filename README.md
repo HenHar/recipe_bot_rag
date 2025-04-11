@@ -2,14 +2,16 @@
 
 ## Web crawler
 * crawls all german recipes of REWE (https://www.rewe.de/rezepte/)
-
+```
+scrapy crawl rewe  -o recipes.json
+```
 ## VectorDB with postgreSQL and pg_vector
 * use of sentence transformer to embed the recipe text into a vector
 * similarity search between embedded user query and all recipes 
 to obtain the semanticly most menainful recipes
 
-## multimodal user input
-* text -> embedding \
+## Multimodal user input
+* text -> embedding
 * image -> image description via VLLM -> embedding
 
 ## RAG + LLM
