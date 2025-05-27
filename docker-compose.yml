@@ -1,0 +1,13 @@
+version: "3.9"
+
+services:
+  recipe_bot:
+    build:
+      context: .  # Context refers to the directory where the Dockerfile is located
+      dockerfile: Dockerfile
+    container_name: recipe_bot
+    ports:
+      - "8502:8502"  # Map host's port 8502 to the container's port 8502
+    restart: unless-stopped  # Restart policy
+    command: streamlit run chat_interface.py --server.port 8502 --server.address=0.0.0.0
+

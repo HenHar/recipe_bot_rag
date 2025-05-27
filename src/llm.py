@@ -19,6 +19,12 @@ class Prompts:
     Beschreibe was auf dem Foto zu sehen ist. Liste alle enthaltene Zutaten auf.
     """
 
+    chatbot_welcome_text = """Ich bin ein Chatbot und nutze ein RAG System (Retrieval-Augmented Generation) um Zugriff auf die REWE Rezeptwelt zu haben.
+                    Diese befinden sich in einer PostgreSQL Datenbank.
+                    Du kannst entweder  ein Gerichtwunsch eingeben und ich werde ein passendes Gericht für dich raussuchen.
+                    Oder du zeigst mir ein Foto von dem Gericht.
+                    """
+
 
 
 

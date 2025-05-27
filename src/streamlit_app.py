@@ -1,14 +1,21 @@
 import streamlit as st
 from tempfile import NamedTemporaryFile
 from llm import Prompts, client, model_version, get_response
-from postgreSQL import get_similar_recipes_text
+from postgreSQL import get_similar_recipes_text, get_connection
 
-st.title("Chefkoch-Bot")
+
+
+st.title("REWE_Chefkoch-Bot")
+
+if "db_conn" not in st.session_state:
+    st.session_state["db_conn"] = get_connection()
+
 if "openai_model" not in st.session_state:
     st.session_state["openai_model"] = model_version
 
 if "messages" not in st.session_state:
     st.session_state.messages = []
+    st.session_state.messages.append({"role": "assistant", "content": Prompts.chatbot_welcome_text})
 
 for message in st.session_state.messages:
     with st.chat_message(message["role"]):
@@ -38,14 +45,13 @@ if user_input := st.chat_input(accept_file= True, file_type=["png", "jpg"], plac
                 except Exception as e:
                     text = "Es gab ein Problem mit der Bildverarbeitung."
 
-        urls, distances, recipes = get_similar_recipes_text(text, limit_results=3)
+        urls, distances, recipes = get_similar_recipes_text(st.session_state["db_conn"], text, limit_results=3)
 
         recipes_text = ""
         for recipe, url in zip(recipes, urls):
             recipes_text += "\n" + recipe + "\n" + url + "\n"
 
         formatted_prompt = Prompts.recipe_prompt.format(recipes_text, text)
-        print(formatted_prompt)
         st.session_state.messages.append({"role": "user", "content": text})
         stream = client.chat.completions.create(
             model=st.session_state["openai_model"],
